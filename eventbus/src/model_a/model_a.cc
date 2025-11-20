@@ -7,12 +7,17 @@
 ModelA::ModelA(EventBus &eb) :
     m_eb(eb)
 {
-    m_eb.subscribe<ModelAMsg>([](const ModelAMsg &e) {
+    m_sub = m_eb.subscribe<ModelAMsg>([](const ModelAMsg &e) {
         std::cout << "ModelA recv msg: " << e.m_s << std::endl;
     });
 }
 
-void ModelA::send()
+void ModelA::send(int i)
 {
-    m_eb.publish(ModelBMsg {1});
+    m_eb.publish(ModelBMsg {i});
+}
+
+void ModelA::cancel()
+{
+    m_sub->cancel();
 }

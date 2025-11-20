@@ -1,24 +1,20 @@
-// #ifndef _MODEL_A_H_
-// #define _MODEL_A_H_
-
 #pragma once
 
-// #include "../sync_event/event.h"
-// #include "../async_event/event.h"
-// #include "../msg/b.h"
+#include "../async_event/event.h"
 #include <iostream>
-
-class EventBus;
+#include <memory>
 
 class ModelA
 {
 public:
     ModelA(EventBus &eb);
+    ~ModelA() = default;
 
-    void send();
+    void send(int i);
+
+    void cancel();
 
 private:
     EventBus &m_eb;
+    std::shared_ptr<EventBus::Subscription> m_sub;
 };
-
-// #endif // _MODEL_A_H_
